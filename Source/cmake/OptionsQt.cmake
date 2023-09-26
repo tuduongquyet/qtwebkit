@@ -280,7 +280,7 @@ WEBKIT_OPTION_DEFINE(USE_GSTREAMER "Use GStreamer implementation of MediaPlayer"
 WEBKIT_OPTION_DEFINE(USE_LIBHYPHEN "Use automatic hyphenation with LibHyphen" PUBLIC ${USE_LIBHYPHEN_DEFAULT})
 WEBKIT_OPTION_DEFINE(USE_MEDIA_FOUNDATION "Use MediaFoundation implementation of MediaPlayer" PUBLIC OFF) # QTFIXME #${USE_MEDIA_FOUNDATION_DEFAULT})
 WEBKIT_OPTION_DEFINE(USE_QT_MULTIMEDIA "Use Qt Multimedia implementation of MediaPlayer" PUBLIC OFF) # QTFIXME #${USE_QT_MULTIMEDIA_DEFAULT})
-WEBKIT_OPTION_DEFINE(USE_WOFF2 "Include support of WOFF2 fonts format" PUBLIC ON)
+WEBKIT_OPTION_DEFINE(USE_WOFF2 "Include support of WOFF2 fonts format" PUBLIC OFF)
 WEBKIT_OPTION_DEFINE(ENABLE_INSPECTOR_UI "Include Inspector UI into resources" PUBLIC ON)
 WEBKIT_OPTION_DEFINE(ENABLE_OPENGL "Whether to use OpenGL." PUBLIC OFF) # QTFIXME
 WEBKIT_OPTION_DEFINE(ENABLE_PRINT_SUPPORT "Enable support for printing web pages" PUBLIC OFF) # QTFIXME
@@ -417,8 +417,8 @@ else ()
     find_package(SQLite3 REQUIRED)
 endif ()
 
-find_package(Freetype 2.4.2 REQUIRED)
-find_package(HarfBuzz 0.9.18 REQUIRED COMPONENTS ICU)
+find_package(Freetype 2.9.0 REQUIRED)
+find_package(HarfBuzz 1.4.2 REQUIRED COMPONENTS ICU)
 find_package(Threads REQUIRED)
 
 if (USE_LIBJPEG)

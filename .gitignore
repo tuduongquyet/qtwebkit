@@ -71,3 +71,6 @@ Source/ThirdParty/ANGLE/parsetab.py
 
 # Ignore user CMake presets
 CMakeUserPresets.json
+
+# build
+build/

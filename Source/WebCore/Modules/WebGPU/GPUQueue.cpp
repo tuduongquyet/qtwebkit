@@ -106,7 +106,7 @@ void GPUQueue::writeTexture(
     m_backing->writeTexture(destination.convertToBacking(), data.data(), data.length(), imageDataLayout.convertToBacking(), convertToBacking(size));
 }
 
-static ImageBuffer* imageBufferForSource(const auto& source)
+static ImageBuffer* imageBufferForSource(const GPUImageCopyExternalImage::SourceType& source)
 {
     return WTF::switchOn(source, [](const RefPtr<ImageBitmap>& imageBitmap) {
         return imageBitmap->buffer();

@@ -26,7 +26,7 @@ import argparse
 
 class QtWebKitConan(ConanFile):
     name = "qtwebkit"
-    version = "5.212.0-alpha4"
+    version = "5.212.0"
     license = "LGPL-2.0-or-later, LGPL-2.1-or-later, BSD-2-Clause"
     url = "https://github.com/qtwebkit/qtwebkit"
     description = "Qt port of WebKit"
@@ -62,26 +62,28 @@ class QtWebKitConan(ConanFile):
         "woff2:shared": False,
         "libtasn1:shared": False,
         "libgcrypt:shared": True, # FIXME
-        "libgpg-error:shared": True # FIXME
+        "libgpg-error:shared": True, # FIXME
+        "harfbuzz:with_glib": False,
+        "harfbuzz:with_icu": True,
     }
 
     def build_requirements(self):
         if self.settings.os == 'Linux':
             if not tools.which('pkg-config'):
                 self.build_requires(
-                    'pkg-config_installer/0.29.2@bincrafters/stable')
+                    'pkgconf/2.0.3')
 
         if self.settings.os == 'Windows': # TODO: Fix msys perl or at least allow using non-msys one from PATH
-            self.build_requires("strawberryperl/5.30.0.1")
+            self.build_requires("strawberryperl/5.32.1.1")
 
         if not tools.which("gperf"):
-            self.build_requires("gperf_installer/3.1@conan/stable")
+            self.build_requires("gperf/3.1")
         if not tools.which("ruby"):
             self.build_requires("ruby_installer/2.6.3@bincrafters/stable")
         if not tools.which("bison"):
-            self.build_requires("bison_installer/3.3.2@bincrafters/stable")
+            self.build_requires("bison/3.8.2")
         if not tools.which("flex"):
-            self.build_requires("flex_installer/2.6.4@bincrafters/stable")
+            self.build_requires("flex/2.6.4")
         if not tools.which("ninja"):
             self.build_requires("ninja/[>=1.9.0]")
         if not tools.which("cmake"):
@@ -89,28 +91,22 @@ class QtWebKitConan(ConanFile):
 
     def requirements(self):
         # TODO: Handle case when custom ICU is needed (AppStore etc., MACOS_USE_SYSTEM_ICU=OFF in CMake)
+        self.requires("freetype/2.13.0")
+        self.requires("harfbuzz/4.4.1")
+        self.requires("icu/73.2")
         if self.settings.os == 'Windows':
-            self.requires("icu/65.1@qtproject/stable")
-            self.requires("libxml2/2.9.10@qtproject/stable")
-            self.requires("libxslt/1.1.34@qtproject/stable")
-            self.requires("zlib/1.2.11")
-            self.requires("libtasn1/4.16.0@qtproject/stable")
-            self.requires("libgcrypt/1.8.4@qtproject/stable")
+            self.requires("libxml2/2.11.4")
+            self.requires("libxslt/1.1.34")
+            self.requires("zlib/1.3")
+            self.requires("libtasn1/4.16.0")
+            self.requires("libgcrypt/1.8.4")
 
         if self.settings.os == 'Windows' or self.settings.os == 'Macos':
-            # FIXME: Pass Qt version, handle more versions
-            qt_version = "5.15.1"
-            if qt_version == "5.14.1":
-                self.requires("sqlite3/3.30.1")
-                self.requires("libjpeg-turbo/2.0.3@qtproject/stable")
-                self.requires("libpng/1.6.37")
-            if qt_version == "5.15.1":
-                self.requires("sqlite3/3.32.3")
-                self.requires("libjpeg-turbo/2.0.5@qtproject/stable")
-                self.requires("libpng/1.6.37")
-
-            self.requires("libwebp/1.1.0")
-            self.requires("woff2/1.0.2@qtproject/stable")
+            self.requires("sqlite3/3.43.1")
+            self.requires("libjpeg-turbo/2.1.5")
+            self.requires("libpng/1.6.40")
+            self.requires("libwebp/1.3.2")
+            # self.requires("woff2/1.0.2")
 
     def build(self):
         cmake = CMake(self, set_cmake_flags=True)

@@ -173,7 +173,7 @@ private:
     static Vector<double> consumeKeyframeKeyList(CSSParserTokenRange);
 
     Ref<StyleRuleBase> createNestingParentRule();
-    void runInNewNestingContext(auto&& run);
+    void runInNewNestingContext(std::function<void()> run);
     NestingContext& topContext()
     {
         ASSERT(!m_nestingContextStack.isEmpty());

@@ -61,7 +61,7 @@ struct PossiblyQuotedIdentifier {
         std::array<uint8_t, 3> computeSpecificityTuple() const;
         unsigned specificityForPage() const;
 
-        void visitAllSimpleSelectors(auto& apply) const;
+        void visitAllSimpleSelectors(std::function<void(CSSSelector&)> apply) const;
 
         bool hasExplicitNestingParent() const;
         void resolveNestingParentSelectors(const CSSSelectorList& parent);

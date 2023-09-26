@@ -559,7 +559,7 @@ RefPtr<StyleRuleNamespace> CSSParserImpl::consumeNamespaceRule(CSSParserTokenRan
     return StyleRuleNamespace::create(namespacePrefix, uri);
 }
 
-void CSSParserImpl::runInNewNestingContext(auto&& run)
+void CSSParserImpl::runInNewNestingContext(std::function<void()> run)
 {
     m_nestingContextStack.append(NestingContext { });
     run();

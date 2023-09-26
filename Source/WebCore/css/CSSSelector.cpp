@@ -979,7 +979,7 @@ CSSSelector::CSSSelector(const CSSSelector& other)
     }
 }
 
-void CSSSelector::visitAllSimpleSelectors(auto& apply) const
+void CSSSelector::visitAllSimpleSelectors(std::function<void(CSSSelector&)> apply) const
 {
     // Effective C++ advices for this cast to deal with generic const/non-const member function.
     apply(*const_cast<CSSSelector*>(this));

@@ -71,9 +71,9 @@ set(HarfBuzz_COMPILE_OPTIONS ${PC_HARFBUZZ_CFLAGS_OTHER})
 set(HarfBuzz_VERSION ${PC_HARFBUZZ_CFLAGS_VERSION})
 
 find_path(HarfBuzz_INCLUDE_DIR
-    NAMES hb.h
+    NAMES harfbuzz/hb.h
     HINTS ${PC_HARFBUZZ_INCLUDEDIR} ${PC_HARFBUZZ_INCLUDE_DIRS}
-    PATH_SUFFIXES harfbuzz
+    PATH_SUFFIXES
 )
 
 find_library(HarfBuzz_LIBRARY
@@ -81,9 +81,12 @@ find_library(HarfBuzz_LIBRARY
     HINTS ${PC_HARFBUZZ_LIBDIR} ${PC_HARFBUZZ_LIBRARY_DIRS}
 )
 
+message(STATUS "HarfBuzz_INCLUDE_DIR: ${HarfBuzz_INCLUDE_DIR}")
+message(STATUS "HarfBuzz_LIBRARY: ${HarfBuzz_LIBRARY}")
+
 if (HarfBuzz_INCLUDE_DIR AND NOT HarfBuzz_VERSION)
-    if (EXISTS "${HarfBuzz_INCLUDE_DIR}/hb-version.h")
-        file(READ "${HarfBuzz_INCLUDE_DIR}/hb-version.h" _harfbuzz_version_content)
+    if (EXISTS "${HarfBuzz_INCLUDE_DIR}/harfbuzz/hb-version.h")
+        file(READ "${HarfBuzz_INCLUDE_DIR}/harfbuzz/hb-version.h" _harfbuzz_version_content)
 
         string(REGEX MATCH "#define +HB_VERSION_STRING +\"([0-9]+\.[0-9]+\.[0-9]+)\"" _dummy "${_harfbuzz_version_content}")
         set(HarfBuzz_VERSION "${CMAKE_MATCH_1}")
